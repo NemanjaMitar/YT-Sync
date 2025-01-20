@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Sync</title>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Video Synchronization Page</h1>
+    <p id="video-title">Video Title: Waiting for data...</p>
+    <p id="current-time">Current Time: 0s</p>
+    <iframe id="video-frame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+
+    <script>
+        const socket = io();
+
+        // Receive video details
+        socket.on("video_details", (data) => {
+            document.getElementById("video-title").innerText = `Video Title: ${data.title}`;
+            document.getElementById("current-time").innerText = `Current Time: ${data.current_time}s`;
+            document.getElementById("video-frame").src = `https://www.youtube.com/embed/${data.video_id}?autoplay=1`;
+        });
+    </script>
+</body>
+</html>
